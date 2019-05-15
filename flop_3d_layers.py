@@ -18,12 +18,21 @@ logger.setLevel(logging.ERROR)
 # Outline of what we need to do:
 # Take command line input of the name of the zip file with images
 def flop_3d_layers(file_path):
+    """
+    Process the original file into a flopped version
+    :param file_path: The original SLA slice file.
+    :return:
+    """
+    # Create a temporary work folder
     with tempfile.TemporaryDirectory() as temp_path:
         logger.debug("Created temporary directory: " + temp_path)
-        # Extract the original file.
+
+        # Extract the original file into the working folder
         zip_ref = zipfile.ZipFile(file_path)
         zip_ref.extractall(temp_path)
         zip_ref.close()
+
+        # Process the images and save into a new zip file
         walk_and_process(temp_path)
         zip_and_save(temp_path, file_path)
 
@@ -31,13 +40,15 @@ def flop_3d_layers(file_path):
 def walk_and_process(directory):
     """Walk all language subfolders, and rename the files
     with the language code and the hardware / app information
-    :param directory: str
-    :return:
+    :param directory: path to the temp folder with all images
+    :return: none
     """
     print("Processing images...")
     pbar = ProgressBar()
     for folderName, subfolders, filenames in os.walk(directory):
         logger.debug("CURRENT FOLDER " + folderName)
+
+        # Wrap the filenames array in pbar() to show a progress bar as we work through them
         for filename in pbar(filenames):
             logger.debug("FILE INSIDE    " + folderName + ": " + filename)
             name, extension = os.path.splitext(filename)
@@ -51,8 +62,8 @@ def walk_and_process(directory):
 def flop_image(image_path):
     """
     Flop (horizontal mirror) the image
-
-    @param image_path: The path to the image to edit
+    :param image_path: The image to edit
+    :return:
     """
     # logger.debug("flop_image: " + image_path)
     image_obj = Image.open(image_path)
@@ -64,7 +75,7 @@ def flop_image(image_path):
 def zip_and_save(temp_path, file_path):
     """
     Re-zip the files with the original name + "_flop"
-    :param temp_path: The temp dir where we flopped the images
+    :param temp_path: The temp dir with the flopped images
     :param file_path: The original zip file
     :return:
     """
@@ -80,21 +91,25 @@ def zip_and_save(temp_path, file_path):
 
 if __name__ == "__main__":
 
+    # Check to see what command line arguments we got
     logger.debug("Arguments: " + str(len(sys.argv)))
     logger.debug("List: " + str(sys.argv))
 
     if len(sys.argv) < 2:
         logger.error("To few arguments, please specify a filename")
 
-    # Look for "-f" so that we can also accept "--force"
+    # Look for "-f" so that we can accept either "-f" or "--force"
+    # TODO: If we add more features, this should move to a proper argparse method
     if len(sys.argv) > 2 and "-f" in sys.argv[2]:
         force = True
     else:
         force = False
 
+    # Assume that the first arg is the path to the slice file
     file_path = sys.argv[1]
     logger.debug("File path: " + str(file_path))
 
+    # Cursory check to see if this is the right file type
     filename, file_extension = os.path.splitext(file_path)
     logger.debug("Filename: " + filename)
     logger.debug("File extension: " + file_extension)
