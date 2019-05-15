@@ -24,6 +24,7 @@ def flop_3d_layers(file_path):
         zip_ref.extractall(temp_path)
         zip_ref.close()
         walk_and_process(temp_path)
+        zip_and_save(temp_path, file_path)
 
 def walk_and_process(directory):
     """Walk all language subfolders, and rename the files
@@ -48,23 +49,26 @@ def flop_image(image_path):
 
     @param image_path: The path to the image to edit
     """
-    logger.debug("flop_image: " + image_path)
+    # logger.debug("flop_image: " + image_path)
     image_obj = Image.open(image_path)
     flop_image = image_obj.transpose(Image.FLIP_LEFT_RIGHT)
     flop_image.save(image_path)
-    flop_image.show()
+    # flop_image.show()
 
-
-
-    # Unzip into a temp directory
-    # Get an array of all of the images
-    # One by one:
-    # - Load the image
-    # - Flop the image
-    # - Save the image
-    # Re-zip the files with the original name + "_flop"
-    # unless we get command line input with a different output name
-    # delete the unzipped temp files
+def zip_and_save(temp_path, file_path):
+    """
+    Re-zip the files with the original name + "_flop"
+    :param temp_path: The temp dir where we flopped the images
+    :param file_path: The original zip file
+    :return:
+    """
+    filename, file_extension = os.path.splitext(file_path)
+    new_zip_filename = filename + "_flop" + file_extension
+    zip_file = zipfile.ZipFile(new_zip_filename, 'w', zipfile.ZIP_DEFLATED)
+    for root, dirs, files in os.walk(temp_path):
+        for file in files:
+            zip_file.write(os.path.join(root, file))
+    zip_file.close()
 
 
 if __name__ == "__main__":
