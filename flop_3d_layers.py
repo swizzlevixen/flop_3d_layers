@@ -3,8 +3,7 @@ import sys
 import os
 import tempfile
 import zipfile
-import PIL
-
+from PIL import Image
 
 # Logging Setup
 logger = logging.getLogger()
@@ -44,14 +43,16 @@ def walk_and_process(directory):
                 logger.debug(">>> Processing OTHER: " + filename)
 
 
-def flop_image(path):
+def flop_image(image_path):
     """
-    Flops image at path
+    Flop (horizontal flip) image at path
     :param path: str
     :return:
     """
-    logger.debug("flop_image: " + path)
-
+    logger.debug("flop_image: " + image_path)
+    image_obj = Image.open(image_path)
+    flop_image = image_obj.transpose(Image.FLIP_LEFT_RIGHT)
+    flop_image.save(image_path)
 
 
 
@@ -67,6 +68,7 @@ def flop_image(path):
 
 
 if __name__ == "__main__":
+
     logger.debug("Arguments: " + str(len(sys.argv)))
     logger.debug("List: " + str(sys.argv))
 
