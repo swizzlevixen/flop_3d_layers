@@ -34,25 +34,25 @@ def walk_and_process(directory):
     for folderName, subfolders, filenames in os.walk(directory):
         logger.debug("CURRENT FOLDER " + folderName)
         for filename in filenames:
-            # logger.debug("FILE INSIDE    " + folderName + ": " + filename)
+            logger.debug("FILE INSIDE    " + folderName + ": " + filename)
             name, extension = os.path.splitext(filename)
             if extension == ".png":
-                # logger.debug("PNG")
-                flop_image(folderName + filename)
+                image_path = os.path.join(folderName, filename)
+                flop_image(image_path)
             else:
                 logger.debug(">>> Processing OTHER: " + filename)
 
-
 def flop_image(image_path):
     """
-    Flop (horizontal flip) image at path
-    :param path: str
-    :return:
+    Flop (horizontal mirror) the image
+
+    @param image_path: The path to the image to edit
     """
     logger.debug("flop_image: " + image_path)
     image_obj = Image.open(image_path)
     flop_image = image_obj.transpose(Image.FLIP_LEFT_RIGHT)
     flop_image.save(image_path)
+    flop_image.show()
 
 
 
