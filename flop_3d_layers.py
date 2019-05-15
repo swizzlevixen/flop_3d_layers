@@ -39,7 +39,8 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         logger.error("To few arguments, please specify a filename")
 
-    if len(sys.argv) > 2 and sys.argv[2].indexOf('f') > -1:
+    # Look for "-f" so that we can also accept "--force"
+    if len(sys.argv) > 2 and "-f" in sys.argv[2]:
         force = True
     else:
         force = False
@@ -51,6 +52,7 @@ if __name__ == "__main__":
     logger.debug("Filename: " + filename)
     logger.debug("File extension: " + file_extension)
 
-    if file_extension == "zip" or force == True:
+    if file_extension == ".sl1" or file_extension == ".zip" or force == True:
+        logger.debug("Valid file to process.")
         flop_3d_layers(file_path)
 
