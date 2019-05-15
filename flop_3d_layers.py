@@ -1,7 +1,6 @@
 import logging
 import sys
 import os
-import shutil
 import tempfile
 import zipfile
 import PIL
@@ -51,7 +50,7 @@ def flop_image(path):
     :param path: str
     :return:
     """
-    # logger.debug("flop_image: " + path)
+    logger.debug("flop_image: " + path)
 
 
 
