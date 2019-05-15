@@ -1,6 +1,6 @@
 # Flop 3D Layers
 
-PrusaSlicer has some really nice supports and slicing for printing with the Prusa SL1 UV resin printer, but for printing on a Wanhao D7, these images are backwards, and result in “inside out” 3D prints. This script will flop all of the images and re-zip for easy upload to [NanoDLP](https://www.nanodlp.com/) and printing.
+[PrusaSlicer](https://github.com/prusa3d/PrusaSlicer) has some really nice supports and slicing for printing with the [Prusa SL1](https://www.prusa3d.com/original-prusa-sl1/) SLA resin printer, but for printing on a [Wanhao D7](http://www.wanhao3dprinter.com/Unboxin/ShowArticle.asp?ArticleID=81), these images are backwards, and result in “inside out” 3D prints. This script will flop all of the images and re-zip for easy upload to [NanoDLP](https://www.nanodlp.com/) and printing.
 
 ## Usage
 
