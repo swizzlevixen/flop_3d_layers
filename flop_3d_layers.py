@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Takes the sliced output from PrusaSlicer, intended for the Prusa SL1,
+and flops the images for proper printing through NanoDLP to a Wanhao D7.
+
+(c) 2019 Mark Boszko
+"""
+
 import logging
 import sys
 import os
