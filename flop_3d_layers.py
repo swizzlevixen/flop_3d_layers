@@ -1,6 +1,7 @@
 import logging
 import sys
 import os
+import shutil
 import tempfile
 import zipfile
 import PIL
@@ -19,13 +20,38 @@ logger.setLevel(logging.DEBUG)
 # Take command line input of the name of the zip file with images
 def flop_3d_layers(file_path):
     with tempfile.TemporaryDirectory() as temp_path:
-        print('created temporary directory', temp_path)
+        logger.debug('Created temporary directory: ' + temp_path)
         # Extract the original file.
         zip_ref = zipfile.ZipFile(file_path)
         zip_ref.extractall(temp_path)
         zip_ref.close()
+        walk_and_process(temp_path)
+
+def walk_and_process(directory):
+    """Walk all language subfolders, and rename the files
+    with the language code and the hardware / app information
+    :param directory: str
+    :return:
+    """
+    for folderName, subfolders, filenames in os.walk(directory):
+        logger.debug("CURRENT FOLDER " + folderName)
+        for filename in filenames:
+            # logger.debug("FILE INSIDE    " + folderName + ": " + filename)
+            name, extension = os.path.splitext(filename)
+            if extension == ".png":
+                # logger.debug("PNG")
+                flop_image(folderName + filename)
+            else:
+                logger.debug(">>> Processing OTHER: " + filename)
 
 
+def flop_image(path):
+    """
+    Flops image at path
+    :param path: str
+    :return:
+    """
+    # logger.debug("flop_image: " + path)
 
 
 
