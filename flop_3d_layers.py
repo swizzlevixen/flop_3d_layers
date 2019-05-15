@@ -69,7 +69,7 @@ def zip_and_save(temp_path, file_path):
     :return:
     """
     filename, file_extension = os.path.splitext(file_path)
-    new_zip_filename = filename + "_flop" + file_extension
+    new_zip_filename = filename + "_flop.zip"
     zip_file = zipfile.ZipFile(new_zip_filename, "w", zipfile.ZIP_DEFLATED)
     for root, dirs, files in os.walk(temp_path):
         for file in files:
