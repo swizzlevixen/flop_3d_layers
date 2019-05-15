@@ -34,7 +34,7 @@ def walk_and_process(directory):
     :param directory: str
     :return:
     """
-    print("Processing...")
+    print("Processing images...")
     pbar = ProgressBar()
     for folderName, subfolders, filenames in os.walk(directory):
         logger.debug("CURRENT FOLDER " + folderName)
@@ -75,6 +75,7 @@ def zip_and_save(temp_path, file_path):
         for file in files:
             zip_file.write(os.path.join(root, file))
     zip_file.close()
+    print(f"Output complete to {new_zip_filename}")
 
 
 if __name__ == "__main__":
