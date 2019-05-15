@@ -1,6 +1,7 @@
 import logging
 import sys
 import os
+import tempfile
 import zipfile
 import PIL
 
@@ -17,19 +18,27 @@ logger.setLevel(logging.DEBUG)
 # Outline of what we need to do:
 # Take command line input of the name of the zip file with images
 def flop_3d_layers(file_path):
-    slicefiles = zipfile.ZipFile(file_path)
+    with tempfile.TemporaryDirectory() as temp_path:
+        print('created temporary directory', temp_path)
+        # Extract the original file.
+        zip_ref = zipfile.ZipFile(file_path)
+        zip_ref.extractall(temp_path)
+        zip_ref.close()
 
 
 
-# Unzip into a temp directory
-# Get an array of all of the images
-# One by one:
-# - Load the image
-# - Flop the image
-# - Save the image
-# Re-zip the files with the original name + "_flop"
-# unless we get command line input with a different output name
-# delete the unzipped temp files
+
+
+
+    # Unzip into a temp directory
+    # Get an array of all of the images
+    # One by one:
+    # - Load the image
+    # - Flop the image
+    # - Save the image
+    # Re-zip the files with the original name + "_flop"
+    # unless we get command line input with a different output name
+    # delete the unzipped temp files
 
 
 if __name__ == "__main__":
