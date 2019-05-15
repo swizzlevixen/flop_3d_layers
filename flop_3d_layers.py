@@ -73,7 +73,7 @@ def zip_and_save(temp_path, file_path):
     zip_file = zipfile.ZipFile(new_zip_filename, "w", zipfile.ZIP_DEFLATED)
     for root, dirs, files in os.walk(temp_path):
         for file in files:
-            zip_file.write(os.path.join(root, file))
+            zip_file.write(os.path.join(root, file), file)
     zip_file.close()
     print(f"Output complete to {new_zip_filename}")
 
