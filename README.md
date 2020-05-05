@@ -1,6 +1,4 @@
-<Warning>
-This script is no longer necessary, as the newer versions of PrusaSlicer now have **Mirror Horizontally** and **Mirror Vertically** checkbox options in the **Printer Settings -> Display** settings.
-</Warning>
+> This script is now obsolete, as the newer versions of PrusaSlicer now have **Mirror Horizontally** and **Mirror Vertically** checkbox options in the **Printer Settings -> Display** settings.
 
 # Flop 3D Layers
 
